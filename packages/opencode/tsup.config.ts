@@ -7,5 +7,5 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: "node20",
-  external: ["@opencode-ai/plugin"],
+  external: ["@opencode/plugin"],
 });

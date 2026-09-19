@@ -1,4 +1,9 @@
-# Context7 Plugin for OpenCode
+# Context7 Plugin for OpenCode (v2)
+
+> Personal fork of the upstream Context7 OpenCode plugin
+> ([upstash/context7](https://github.com/upstash/context7), MIT),
+> ported to the OpenCode v2 plugin API. V1 (`@opencode-ai/plugin`) support was
+> removed. For private use; not published to npm.
 
 Context7 solves a common problem with AI coding assistants: outdated training data and hallucinated APIs. Instead of relying on stale knowledge, Context7 fetches current documentation directly from source repositories.
 
@@ -12,15 +17,15 @@ Installing the plugin adds two things to OpenCode:
 ## Installation
 
 ```bash
-opencode plugin @upstash/context7-opencode
+opencode plugin add github:gilsid/context7#feat/opencode-v2::path:packages/opencode
 ```
 
 The command installs the plugin and adds it to your OpenCode config. You can also add it by hand:
 
-```json opencode.json
+```jsonc // opencode.jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@upstash/context7-opencode"]
+  "plugins": ["github:gilsid/context7#feat/opencode-v2::path:packages/opencode"]
 }
 ```
 
@@ -37,16 +42,16 @@ export CONTEXT7_API_KEY="your-api-key"
 
 The plugin picks up `CONTEXT7_API_KEY` automatically and sends it as an `Authorization` header instead of running the OAuth flow. You can also pass the key through the plugin options:
 
-```json opencode.json
+```jsonc // opencode.jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [["@upstash/context7-opencode", { "apiKey": "your-api-key" }]]
+  "plugins": [{ "package": "github:gilsid/context7#feat/opencode-v2::path:packages/opencode", "options": { "apiKey": "your-api-key" } }]
 }
 ```
 
 ## Overriding What the Plugin Adds
 
-Both entries are additive, and an entry you configure yourself always wins. If your `opencode.json` already defines an MCP server named `context7`, the plugin leaves it untouched.
+Both entries are additive, and an entry you configure yourself always wins. If your `opencode.jsonc` already defines an MCP server named `context7` or a skill named `context7-mcp`, the plugin leaves it untouched.
 
 ## Usage
 
@@ -89,4 +94,6 @@ The `context7_resolve-library-id` tool returns available versions, so you can pi
 
 ## License
 
-MIT
+MIT — see the `LICENSE` file at the repo root.
+Original work Copyright (c) 2021 Upstash, Inc.; v2 port changes in this fork
+are also released under MIT.

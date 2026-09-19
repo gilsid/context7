@@ -17,7 +17,7 @@ Installing the plugin adds two things to OpenCode:
 ## Installation
 
 ```bash
-opencode plugin add github:gilsid/context7#feat/opencode-v2::path:packages/opencode
+opencode plugin add github:gilsid/context7::path:packages/opencode
 ```
 
 The command installs the plugin and adds it to your OpenCode config. You can also add it by hand:
@@ -25,7 +25,7 @@ The command installs the plugin and adds it to your OpenCode config. You can als
 ```jsonc // opencode.jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugins": ["github:gilsid/context7#feat/opencode-v2::path:packages/opencode"]
+  "plugins": ["github:gilsid/context7::path:packages/opencode"]
 }
 ```
 
@@ -45,7 +45,7 @@ The plugin picks up `CONTEXT7_API_KEY` automatically and sends it as an `Authori
 ```jsonc // opencode.jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugins": [{ "package": "github:gilsid/context7#feat/opencode-v2::path:packages/opencode", "options": { "apiKey": "your-api-key" } }]
+  "plugins": [{ "package": "github:gilsid/context7::path:packages/opencode", "options": { "apiKey": "your-api-key" } }]
 }
 ```
 

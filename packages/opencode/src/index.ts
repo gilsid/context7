@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Plugin, Skill } from "@opencode/plugin";
+import type { Plugin, Skill } from "@opencode/plugin";
 import skillMarkdown from "../skills/context7-mcp/SKILL.md";
 
 const MCP_BASE_URL = "https://mcp.context7.com";
@@ -45,10 +45,15 @@ function parseFrontmatter(raw: string): { name: string; description: string; con
  * Upstream: https://github.com/upstash/context7 (MIT, Copyright (c) 2021 Upstash, Inc.)
  * The Context7 API backend remains a hosted service; this plugin only wires
  * the MCP server config plus the documentation skill into OpenCode.
+ * NOTE: this deliberately has zero runtime imports of `@opencode/plugin`.
+ * The v2 host does not resolve that package for files under a plugins/
+ * directory (it fails with "Cannot find package '@opencode/plugin'"), so we
+ * export a plain `{ id, setup }` object like other working local plugins.
+ * The import above is type-only and erased at build time.
  */
-export default Plugin.define({
+export default {
   id: "context7",
-  async setup(ctx) {
+  async setup(ctx: Plugin.Context) {
     const apiKey =
       nonEmptyString((ctx.options as Context7PluginOptions)?.apiKey) ??
       nonEmptyString(process.env.CONTEXT7_API_KEY);
@@ -84,4 +89,4 @@ export default Plugin.define({
       });
     });
   },
-});
+};

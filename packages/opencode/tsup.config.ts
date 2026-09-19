@@ -8,4 +8,7 @@ export default defineConfig({
   sourcemap: true,
   target: "node20",
   external: ["@opencode/plugin"],
+  loader: {
+    ".md": "text",
+  },
 });

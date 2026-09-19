@@ -49,6 +49,23 @@ The plugin picks up `CONTEXT7_API_KEY` automatically and sends it as an `Authori
 }
 ```
 
+## Personal Single-File Install (no service restart needed for the edit itself)
+
+This repo builds to one self-contained file — the skill markdown is inlined
+at build time, the only runtime import is `@opencode/plugin` (provided by the
+OpenCode host):
+
+```bash
+# from packages/opencode
+pnpm build   # or: tsup
+cp dist/index.js ~/.config/opencode/plugins/context7.js
+# remove the trailing sourceMappingURL line, then restart OpenCode yourself
+```
+
+No `plugins` config entry is needed; files directly under
+`~/.config/opencode/plugins/` are auto-loaded. Re-copy the file after every
+source change.
+
 ## Overriding What the Plugin Adds
 
 Both entries are additive, and an entry you configure yourself always wins. If your `opencode.jsonc` already defines an MCP server named `context7` or a skill named `context7-mcp`, the plugin leaves it untouched.

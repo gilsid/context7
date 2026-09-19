@@ -1,7 +1,7 @@
-import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Plugin, Skill } from "@opencode/plugin";
+import skillMarkdown from "../skills/context7-mcp/SKILL.md";
 
 const MCP_BASE_URL = "https://mcp.context7.com";
 const MCP_URL = `${MCP_BASE_URL}/mcp`;
@@ -9,7 +9,10 @@ const MCP_OAUTH_URL = `${MCP_BASE_URL}/mcp/oauth`;
 const MCP_SERVER_NAME = "context7";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
-const SKILL_FILE = join(currentDir, "..", "skills", "context7-mcp", "SKILL.md");
+// Provenance for the skill entry. The content itself is bundled (imported as
+// text at build time), so this works from any install method: local path,
+// git, npm, or a single-file copy in an opencode plugins directory.
+const SKILL_PATH = join(currentDir, "..", "skills", "context7-mcp", "SKILL.md");
 
 export interface Context7PluginOptions {
   apiKey?: string;
@@ -69,14 +72,14 @@ export default Plugin.define({
     });
 
     await ctx.skill.transform((editor) => {
-      const { name, description, content } = parseFrontmatter(readFileSync(SKILL_FILE, "utf8"));
+      const { name, description, content } = parseFrontmatter(skillMarkdown);
       const id = name;
       if (editor.get(id)) return;
       editor.add({
         id: id as Skill.ID,
         name: name as Skill.Name,
         description,
-        path: SKILL_FILE as Skill.Info["path"],
+        path: SKILL_PATH as Skill.Info["path"],
         content,
       });
     });
